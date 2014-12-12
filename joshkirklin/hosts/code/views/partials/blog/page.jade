@@ -1,0 +1,39 @@
+#header-outer-wrap
+	#header-inner-wrap
+		#header-auth Josh Kirklin
+		#header-title = new code.blog(this);
+
+#body-inner-wrap.float-block
+	#post-body
+		h1.post-title {{post.title}}
+		p.post-header
+			span.post-date {{post.date}}
+			span.post-tags
+				span(ng-repeat="tag in post.tags")
+					| <a href="search/{{tag}}">{{tag}}</a>&nbsp;
+		#loader
+			img(ng-src="/main/themes/default/loader-ring.gif" ng-show="isLoading")
+		#post-content(ng-bind-html="post.content")
+		
+	#recent-posts
+		div.preview-block(ng-repeat="preview in previews")
+			a(ng-href="blog/{{preview.content}}")
+				div.recent-post.shadowed
+					div.preview-post-id {{preview._id}}
+					div.preview-date {{preview.date}}
+					div.preview-title {{preview.previewTitle}}
+					div.preview-title-full {{preview.title}}
+					div.preview-content {{preview.preview}}
+			div.preview-tags
+				span(ng-repeat="tag in preview.tags")
+					| <a href="search/{{tag}}">{{tag}}</a>&nbsp;			
+		
+#comments-wrap
+	ul
+		li(ng-repeat="comment in comments")
+			span {{comment.user}}
+			p {{comment.content}}
+			
+	p I am an entity run by thought - I am an entity run by code	
+
+#footer-outer-wrap

@@ -1,0 +1,15 @@
+<p>There are a lot of posts and threads across the web discussing how to start thinking 'The Angular Way' when coming from a jQuery background. Such as <a href="http://stackoverflow.com/questions/14994391/thinking-in-angularjs-if-i-have-a-jquery-background" target="_blank">that thread on stackoverflow</a> that you have probably already seen. Well, here's another one :p
+
+<p>It definitely requires a shift in the mental gears. I think much of this is due to a shift in focus in where the activity is centered between the two. While jQuery apps are mostly rooted in the control layer, Angular is more distributed and directed largely by the view layer.
+
+<p>I like to think of jQuery as a 'reach, grab, fiddle' system where one very busy worker sits in the middle of it all, reaches out and gets things from one place, pulls it back to the center, and puts it somewhere else. Sometimes it reaches out, works on something, then goes and does something else somewhere else, all based out of the center. When building a jQuery app, I often don't even touch the view layer until after the controllers are built. It is enough to simply know what view elements I will eventually need, and build the handling for them by id long before ever actually needing the elements themselves.
+
+<p>By contrast, Angular is more of a team of workers with one guy up at the front working with the user and passing requests to a runner in the middle, who then dashes to the back to retrieve whatever it is the front-man needs. Data is passed along in a chain of smooth hand-offs in a clear division of labor.
+
+<p>For me, personally, the first step in thinking Angular, is to shift the focus from the center of the app and break it up into a teamwork between components, driven mostly by the front of the app.
+
+<p>Step two of course, is to get comfortable with routing and REST if you are not already. This certainly isn't anything new or unique to Angular, but may or may not be something that you were doing with jQuery, depending on your typical back-end set up. What Angular does do is move some of the traditionally back-end services up front. Apache/php url rewrites just aren't needed when you harness things like Angular and Node. You don't have to bend over backwards to maintain the functionality of the browser's back button with dynamically routed and loaded content.
+
+<p>Have any other tips or concepts to help shift the thought process when getting started with Angular? Let me hear about it.
+
+<p>- JK
