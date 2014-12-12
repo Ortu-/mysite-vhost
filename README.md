@@ -1,7 +1,7 @@
 Simple virtual-host blog
 ========================
 
-![(screenshot)](https://raw.github.com/Ortu-/mysite-vhost/master/sample.jpg)
+![(screenshot)](https://raw.github.com/Ortu-/mysite-vhost/master/sample.JPG)
 
 I am working on getting a basic blog site up on the MEAN stack and supporting easy to manage virtual sub-domains. This is currently just running on localhost until it gets more fleshed out.
 
