@@ -4,7 +4,7 @@ var router = express.Router();
 var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost:27017/blog", {native_parser:true});
 
-//get blog data --------------------------------------
+//blog GET --------------------------------------
 
 router.get('/blog/post-content/*', function(req, res){
 	console.log("requested post content: " + req.url);
@@ -22,6 +22,7 @@ router.get('/blog/post-content/*', function(req, res){
 			resData = {	contentBody: fileContent.toString()	}; 
 
 			db.collection('posts').find({content: reqPost}).toArray(function(err, postData){
+				resData.post_id	= postData[0]._id;
 				resData.title = postData[0].title;
 				resData.date = postData[0].date;
 				resData.tags = postData[0].tags;
@@ -80,6 +81,38 @@ router.get('/blog/preview-posts/*', function(req, res){
 	});
 });
 
+
+
+router.get('/blog/post-comments/*', function(req, res){
+	console.log("req for comments");
+	var reqPost = req.url.split("/").pop();
+	console.log(">>requesting comments for post_id" + reqPost);
+	db.collection('comments').find({post_id: reqPost}).sort({_id: 1}).toArray(function(err, comments){
+		console.log("  found " + comments.length + " comments");
+		res.json(comments);
+	});
+});
+
+
+
+//blog POST --------------------------------------
+
+router.post('/blog/post-add-comment', function(req, res){
+	console.log(">> Adding comment: ");
+	console.log(req.body);
+	
+	db.collection('comments').insert({
+		post_id: req.body.post_id,
+		date: req.body.date,
+		user: req.body.user,
+		content: req.body.content
+	}, function(err, result){	
+		var rtn = true;
+		if(err){ rtn = false; }
+		res.json({rtn: rtn});	
+	});
+
+});
 
 
 module.exports = router;

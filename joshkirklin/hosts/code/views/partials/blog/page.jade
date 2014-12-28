@@ -12,7 +12,7 @@
 				span(ng-repeat="tag in post.tags")
 					| <a href="search/{{tag}}">{{tag}}</a>&nbsp;
 		#loader
-			img(ng-src="/main/themes/default/loader-ring.gif" ng-show="isLoading")
+			img(ng-src="/main/themes/default/images/loader-ring.gif" ng-show="isLoading")
 		#post-content(ng-bind-html="post.content")
 		
 	#recent-posts
@@ -29,11 +29,26 @@
 					| <a href="search/{{tag}}">{{tag}}</a>&nbsp;			
 		
 #comments-wrap
-	ul
-		li(ng-repeat="comment in comments")
-			span {{comment.user}}
-			p {{comment.content}}
-			
-	p I am an entity run by thought - I am an entity run by code	
+	div.comments-list
+		div.comment-block.shadowed.float-block(ng-repeat="comment in comments")
+			div.comment-left-col
+				div.comment-avatar {{comment.avatar}}
+				div.comment-user {{comment.user}}
+				div.comment-date {{comment.date}}
+			div.comment-right-col
+				div.comment-content {{comment.content}}
+
+	div.add-comment-block
+		div
+			#add-comment-title Add A Comment:
+			div.comment-avatar {{form.avatar}}
+			div.comment-user(ng-model='form.user') {{form.user}}
+		textarea.add-comment-content(ng-model='form.content')
+		div
+			input(type='checkbox' id='rbt' ng-model='form.rbt')
+			label(for='rbt') I am an entity run by thought
+			input(type='checkbox' id='rbc' ng-model='form.rbc')
+			label(for='rbc') I am an entity run by code
+			div.add-comment-submit(ng-click='addComment()') Add Comment
 
 #footer-outer-wrap
