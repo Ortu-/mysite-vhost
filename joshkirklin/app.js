@@ -6,11 +6,10 @@ var app = express();
 
 app.use(logger('dev'));
 
-
-
-//register virtual hosts
+app.use(vhost('test.joshkirklin.com', require('./hosts/test')));
 app.use(vhost('code.joshkirklin.com', require('./hosts/code')));
 app.use(vhost('jcode.joshkirklin.com', require('./hosts/jcode')));
+//app.use(vhost('ecode.joshkirklin.com', require('./hosts/ecode')));
 app.use(vhost('*.joshkirklin.com', require('./hosts/www')));
 app.use(vhost('joshkirklin.com', require('./hosts/www')));
 

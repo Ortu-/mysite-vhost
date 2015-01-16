@@ -4,6 +4,21 @@
 		#header-title = new code.blog(this);
 
 #body-inner-wrap.float-block
+	
+	#body-nav
+		#nav-btn-menu.nav-btn.rounded(ng-click="menu.active=!menu.active")
+			img(src="/main/themes/default/images/icon-menu32.gif")
+		a(href="http://www.github.com/ortu-")
+			#nav-btn-github.nav-btn.rounded
+			
+		#nav-panel-menu.shadowed2(ng-show="menu.active" ng-mouseover="menu.active=true;" ng-mouseleave="menu.active=false;")
+			a(href="/user/login")
+				div.nav-menu-item user:\> Login_
+			a(href="/user/profile")
+				div.nav-menu-item user:\> Profile_
+			a(href="/")
+				div.nav-menu-item loc:\> &nbsp;Home_
+	
 	#post-body
 		h1.post-title {{post.title}}
 		p.post-header
@@ -32,7 +47,8 @@
 	div.comments-list
 		div.comment-block.shadowed.float-block(ng-repeat="comment in comments")
 			div.comment-left-col
-				div.comment-avatar {{comment.avatar}}
+				div
+					img.comment-avatar(ng-src="/blog/media/usr/{{comment.avatar}}")
 				div.comment-user {{comment.user}}
 				div.comment-date {{comment.date}}
 			div.comment-right-col
@@ -41,7 +57,8 @@
 	div.add-comment-block
 		div
 			#add-comment-title Add A Comment:
-			div.comment-avatar {{form.avatar}}
+			div
+				img.comment-avatar(ng-src="/blog/media/usr/{{form.avatar}}")
 			div.comment-user(ng-model='form.user') {{form.user}}
 		textarea.add-comment-content(ng-model='form.content')
 		div

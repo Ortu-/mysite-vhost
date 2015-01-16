@@ -12,7 +12,6 @@ var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost:27017/blog", {native_parser:true});
 
 
-
 //router setup
 var routes = require('./routes/routes');
 var services = require('./routes/services');

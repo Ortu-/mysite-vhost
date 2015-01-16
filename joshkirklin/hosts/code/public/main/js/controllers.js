@@ -4,25 +4,29 @@ appControllers.controller('homeCtrl', function($scope, $routeParams){
 	
 });
 
+appControllers.controller('loginCtrl', function($scope, userSession, $http, $routeParams){
+	
+});
+
 appControllers.controller('searchCtrl', function($scope, $routeParams){
 	
 });
 
-appControllers.controller('blogCtrl', function($scope, $http, $sce, $timeout, $routeParams){
+appControllers.controller('blogCtrl', function($scope, userSession, $http, $sce, $timeout, $routeParams){
 	
-	//get post content
 	window.scrollTo(0, 0);
 	$scope.isLoading = true;	
 	
+	$scope.menu = {active: false};
 	$scope.post = {};
 	$scope.form = {};
+	$scope.pushComment = {};
 	$scope.comments = [];
 	$scope.previews = [];
 	$scope.previewPage = 0;
 	$scope.readingList = [];
 	
-	
-	
+	//get post content
 	if(!$routeParams.reqPost){
 	
 		//get next unread post
@@ -82,23 +86,34 @@ appControllers.controller('blogCtrl', function($scope, $http, $sce, $timeout, $r
 		$http.get('/services/blog/post-comments/' + reqPost)
 			.success(function(data){
 				$scope.comments = data;
-				
-				//TODO: get user details for each comment (avatar, contact etc) -> do it in the comments get req, and return the 'join'?
 			});
 	}
-	
+
 	
 	
 	//get user data
-	$scope.getUserDetails = function(reqUser){
-
-	}
-	
-	
-	
 	$scope.getActiveUser = function(){
-		//TEMP:
-		$scope.form.user = "JoshKirklin";	
+		
+		if(userSession.isLoggedIn){
+		
+			$scope.form.avatar = "avatar_" + $scope.form.user + ".jpg";
+			
+		}
+		else{
+		
+			//check localstorage for a previous guest, else create a new guest
+			if(false){
+			
+			}
+			else{
+				userSession.name = "Guest" + Math.floor((Math.random() * 10000) + 1);
+			}
+
+			$scope.form.avatar = "avatar_guest.jpg";
+		}
+		
+		$scope.form.user = userSession.name;
+		
 	}
 
 
@@ -107,7 +122,7 @@ appControllers.controller('blogCtrl', function($scope, $http, $sce, $timeout, $r
 	$scope.addComment = function(){
 		
 		if(!$scope.form.rbt || $scope.form.rbc){
-			alert("If you are a real human, check only the box 'run by thought'.\r\n\r\nDon't want to mess with this? Register or Sign In!");
+			alert("If you are a real human, check the appropriate box.\r\n\r\nDon't want to mess with this? Register or Sign In!");
 		}
 		else if(!$scope.form.content){
 			alert("Hey! Your comment is blank!");
@@ -119,11 +134,17 @@ appControllers.controller('blogCtrl', function($scope, $http, $sce, $timeout, $r
 			
 			$http.post('/services/blog/post-add-comment/', $scope.form)
 				.success(function(data){
-					//push to comments and clear the form.
-					
+					angular.copy($scope.form, $scope.pushComment);
+					$scope.comments.push($scope.pushComment);
+					$scope.form.content = "";
 				});
 		}
 	}
+	
+	
+	
+	//menu controls
+
 
 });
 

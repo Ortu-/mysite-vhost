@@ -89,6 +89,20 @@ router.get('/blog/post-comments/*', function(req, res){
 	console.log(">>requesting comments for post_id" + reqPost);
 	db.collection('comments').find({post_id: reqPost}).sort({_id: 1}).toArray(function(err, comments){
 		console.log("  found " + comments.length + " comments");
+		
+		//TODO: drop avatar field from comments, query by username. We could build it by username, but we will also want to query other user info like contact, post count?, rating?
+
+		//set comment avatar
+		for(var i = 0; i < comments.length; i++){
+			if(comments[i].user.substr(0, 5) == "Guest"){
+				comments[i].avatar = "avatar_guest.jpg"
+			}
+			else{
+				//TEMP: just build it
+				comments[i].avatar = "avatar_"+ comments[i].user +".jpg"
+			}
+		}
+		
 		res.json(comments);
 	});
 });

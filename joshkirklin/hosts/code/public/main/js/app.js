@@ -1,7 +1,8 @@
 var codeApp = angular.module('codeApp', [
 	'ngRoute',
 	'ngResource',
-	'appControllers'
+	'appControllers',
+	'appSession'
 ]);
 
 codeApp.config(function($locationProvider, $routeProvider){
@@ -11,6 +12,10 @@ codeApp.config(function($locationProvider, $routeProvider){
 		.when('/', { templateUrl: '/partials/home/page', 
 			controller: 'homeCtrl', 
 			title: 'Code | Josh Kirklin' })
+			
+		.when('/login:returnPath', { templateUrl: 'partials/login/page', 
+			controller: 'loginCtrl',
+			title: 'User Login | Josh Kirklin' })			
 			
 		.when('/blog', { templateUrl: 'partials/blog/page', 
 			controller: 'blogCtrl',
@@ -45,3 +50,16 @@ codeApp.run(['$location', '$rootScope', function($location, $rootScope) {
     });
 	
 }]);
+
+
+
+//handle user session
+
+var appSession = angular.module('appSession', [])
+
+	.value('userSession', {
+		name: 'Guest',
+		isLoggedIn: false,
+		di_sses: ''
+	});
+	
