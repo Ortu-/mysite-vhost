@@ -8,6 +8,14 @@ html(lang="en" ng-app="codeApp")
 		link(rel='stylesheet', href='/main/themes/default/stylesheets/style.css')
 	body
 		div(ng-view="")
+
+		#footer-outer-wrap
+			#footer-inner-wrap
+				a(href="http://www.github.com/ortu-" target="_blank")
+					#social-btn-github.social-btn.rounded
+				a(href="https://plus.google.com/u/0/116033904102273038531/posts" target="_blank")
+					#social-btn-gplus.social-btn.rounded
+
 		script(type='text/javascript' src='/vlib/AngularJS/angular.min.js')
 		script(type='text/javascript' src='/vlib/AngularJS/angular-route.min.js')
 		script(type='text/javascript' src='/vlib/AngularJS/angular-resource.min.js')

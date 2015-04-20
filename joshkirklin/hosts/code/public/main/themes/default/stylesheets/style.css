@@ -63,6 +63,7 @@ a:hover{
 	}
 		
 		#header-auth{
+			color:#ffc033 !important;
 			height:36px;
 			position:absolute;
 			top:0px;
@@ -76,6 +77,18 @@ a:hover{
 			bottom:10px;
 			font:24px Consolas, "Courier New", sans-serif;
 		}
+		#header-nav{
+			float:right;
+		}
+			#header-nav a{
+				/*color:#ffc033;*/
+				text-decoration:none;
+				margin-left:20px;
+				font:16px Consolas, "Courier New", sans-serif;
+			}
+			#header-nav a:hover{
+				/*color:#bd8600;*/
+			}		
 		
 #body-inner-wrap{
 	height:100%;
@@ -94,6 +107,29 @@ a:hover{
 		margin:auto;
 	}
 	
+	#page-body-left{
+		height:100%;
+		min-height:800px;
+		width:650px;
+		display:inline-block;
+		text-align:justify;
+		font:20px Cambria, "Times New Roman", serif;
+		float:left;
+		position:relative;
+		margin-top:55px;
+	}
+		#page-body-left h1{
+			font-size:38px;
+		}
+	#page-body-right{
+		height:100%;
+		display:block;
+		float:right;
+		margin-top:80px;
+		position:relative;	
+	}
+	
+		
 	#body-nav{
 		position:absolute;
 		right:0px;
@@ -114,12 +150,6 @@ a:hover{
 			behavior: url('/vlib/PIE/PIE.htc');	
 			cursor:pointer;
 		}
-			#nav-btn-github{
-				background-image: url('/main/themes/default/images/GitHub-Mark-32px.png');
-			}
-			#nav-btn-github:hover{
-				background-image: url('/main/themes/default/images/GitHub-Mark-Light-32px.png');
-			}			
 		
 		#nav-panel-menu{
 			width:256px;
@@ -338,3 +368,25 @@ a:hover{
 	position:fixed;
 	bottom:0px;
 }
+	#footer-inner-wrap{
+		height:100%;
+		width:1000px;
+		margin:0 auto;
+		position:relative;
+	}
+	.social-btn{
+		width:32px;
+		height:32px;
+		background-color:#2a2a2a;
+		float:left;
+		margin:9px 12px 0px 0px;
+	}
+	.social-btn:hover{
+		cursor:pointer;
+	}
+		#social-btn-github{
+			background-image: url('/main/themes/default/images/GitHub-Mark-Light-32px.png');
+		}
+		#social-btn-gplus{
+			background-image: url('/main/themes/default/images/gPlus-32px.png');
+		}		

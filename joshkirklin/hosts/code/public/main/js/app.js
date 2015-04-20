@@ -12,24 +12,30 @@ codeApp.config(function($locationProvider, $routeProvider){
 		.when('/', { templateUrl: '/partials/home/page', 
 			controller: 'homeCtrl', 
 			title: 'Code | Josh Kirklin' })
+		.when('/about', { templateUrl: '/partials/about/page', 
+			controller: 'homeCtrl', 
+			title: 'Code | Josh Kirklin' })
 			
-		.when('/login:returnPath', { templateUrl: 'partials/login/page', 
+		.when('/user/login', { templateUrl: 'partials/login/page', 
 			controller: 'loginCtrl',
-			title: 'User Login | Josh Kirklin' })			
+			title: 'User Login | Josh Kirklin' })
+		.when('/user/profile/:reqUser', { templateUrl: 'partials/profile/page', 
+			controller: 'profileCtrl',
+			title: 'User Profile' })			
+			
+		.when('/blog/search', { templateUrl: 'partials/search/page', 
+			controller: 'searchCtrl',
+			title: 'Blog Search | Josh Kirklin' })
+		.when('/blog/search/:reqTag', { templateUrl: 'partials/search/page', 
+			controller: 'searchCtrl',
+			title: 'Blog Search | Josh Kirklin' })
 			
 		.when('/blog', { templateUrl: 'partials/blog/page', 
 			controller: 'blogCtrl',
 			title: 'Code Blog | Josh Kirklin' })
 		.when('/blog/:reqPost', { templateUrl: 'partials/blog/page', 
 			controller: 'blogCtrl',
-			title: 'Code Blog | Josh Kirklin' })			
-			
-		.when('/search', { templateUrl: 'partials/search/page', 
-			controller: 'searchCtrl',
-			title: 'Blog Search | Josh Kirklin' })
-		.when('/search/:reqTag', { templateUrl: 'partials/search/page', 
-			controller: 'searchCtrl',
-			title: 'Blog Search | Josh Kirklin' })			
+			title: 'Code Blog | Josh Kirklin' })					
 			
 		.when('/downloads', { templateUrl: 'partials/downloads/page', 
 			controller: 'downloadsCtrl',
@@ -60,6 +66,6 @@ var appSession = angular.module('appSession', [])
 	.value('userSession', {
 		name: 'Guest',
 		isLoggedIn: false,
-		di_sses: ''
+		sessionID: ''
 	});
 	
