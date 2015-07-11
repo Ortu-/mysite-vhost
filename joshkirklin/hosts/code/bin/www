@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-var debug = require('debug')('my-application');
-var app = require('../app');
+var debug = require('debug')('vhost-code');
+var app = require('../hostApp');
 
 app.set('port', process.env.PORT || 3000);
 

@@ -1,0 +1,236 @@
+
+.img-block{
+	width:100%;
+	text-align:center;
+	margin:30px auto;
+}
+		
+	#body-nav{
+		position:absolute;
+		right:0px;
+		top:30px;
+	}
+		.nav-btn{
+			width:32px;
+			height:32px;
+			float:right;
+			margin-left:8px;
+		}
+		.nav-btn:hover{
+			box-shadow:0px 0px 10px #ccc;
+			behavior: url('/vendor/PIE/PIE.htc');	
+			cursor:pointer;
+		}
+		
+		#nav-panel-menu{
+			width:256px;
+			height:400px;
+			background-color:#2a2a2a;
+			color:#ffc933;
+			position:absolute;
+			right:32px;
+			top:-20px;
+			z-index:1000;
+		}
+			#nav-panel-menu a{
+				color:#ffc933;
+			}
+			#nav-panel-menu a:hover{
+				color:#fff;
+			}			
+			.nav-menu-item{
+				padding:5%;
+				width:90%;
+				font:24px Consolas, "Courier New", sans-serif;
+				
+			}
+			.nav-menu-item:hover{
+				background-color:#ffc933;
+				color:#fff;
+				cursor:pointer;
+			}
+			
+	.post-active-id{
+		position:absolute;
+		display:none;
+	}
+	#post-body{
+		height:100%;
+		min-height:800px;
+		width:650px;
+		display:inline-block;
+		text-align:justify;
+		font:20px Cambria, "Times New Roman", serif;
+		float:left;
+		position:relative;
+	}
+		#post-body h1{
+			font-size:38px;
+		}
+		.post-header{
+			position:relative;
+			height:14px;
+			display:block
+		}
+		.post-date{
+			font-size:14px;
+			position:absolute;
+			left:0px;
+			top:0px;
+			bottom:0px;
+			margin:auto 0;
+		}
+		.post-tags{
+			font-size:14px;
+			position:absolute;
+			right:0px;
+			top:0px;
+			bottom:0px;
+			margin:auto 0;
+			color:#bd8600;
+		}	
+			.post-tags a{
+				border:1px solid #ccc;
+				padding:1px 4px;
+			}
+			.post-tags a:hover{
+				color:#fff;
+				background-color:#ffa000;
+			}
+		#post-content{
+			color:#555;
+		}
+
+	#recent-posts{
+		height:100%;
+		display:block;
+		float:right;
+		margin-top:80px;
+		position:relative;
+		font:14px Cambria, "Times New Roman", serif;
+	}
+	.recent-post{
+		width:246px;
+		height:118px;
+		background-color:#ffc033;
+		margin-top:15px;
+		color:#fff;
+		padding:5px;
+		cursor:pointer;
+	}
+		.recent-post:hover{
+			background-color:#ffa000;
+		}
+		.preview-post-id{
+			display:none;
+			position:absolute;
+		}
+		.preview-date{
+			float:right;
+			padding-top:4px;
+		}
+		.preview-title{
+			font-size:18px;
+			color:#555;
+			text-decoration:underline;
+			float:left;
+		}
+		.preview-title-full{
+			display:none;
+			position:absolute;
+		}
+		.preview-content{
+			margin-top:38px;
+		}
+	.preview-block{
+		position:relative;
+	}
+	.preview-tags{
+		float:left;
+		position:absolute;
+		bottom:11px;
+		left:5px;
+	}
+		.preview-tags a{
+			color:#555;
+		}
+		.preview-tags a:hover{
+			color:#fff;
+		}
+		
+#comments-wrap{
+	min-height:400px;
+	width:950px;
+	margin:40px auto 100px auto;
+	padding:20px;
+	position:relative;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+}
+	.comments-list{
+		list-style-type:none;
+		position:relative;
+		width:100%;
+	}
+	.comment-block{
+		width:98%;
+		background-color:#fff;
+		padding:1%;
+		margin:20px 0px;
+	}
+	.comment-left-col{
+		width:15%;
+		float:left;
+	}
+		.comment-avatar{
+			width:64px;
+			height:64px;
+			border:1px solid #aaa;
+		}
+		.comment-user{
+			margin-top:10px;
+		}
+	.comment-right-col{
+		width:85%;
+		float:right;
+	}
+		.comment-date{
+		
+		}
+		.comment-content{
+			width:100%;
+		}
+	.add-comment-block{
+		width:100%;
+		border-top:1px solid #ccc;
+		padding-top:20px;
+		position:relative;
+	}
+		#add-comment-title{
+			height:36px;
+			position:absolute;
+			left:15%;
+			top:32px;
+			font:36px Cambria, "Times New Roman", serif;
+			color:#666;
+		}
+		.add-comment-content{
+			width:100%;
+			height:100px;
+			margin: 20px auto;
+		}
+		.add-comment-submit{
+			float:right;
+			width:120px;
+			height:30px;
+			line-height:30px;
+			background-color:#ffc033;
+			color:#fff;
+			cursor:pointer;			
+			text-align:center;
+		}
+		.add-comment-submit:hover{
+			background-color:#ffa000;
+			box-shadow:5px 5px 10px #ccc;
+			behavior: url('/vendor/PIE/PIE.htc');			
+		}

@@ -1,0 +1,19 @@
+#header-outer-wrap
+	#header-inner-wrap
+		a(href="/")
+			#header-auth Josh Kirklin
+		#header-title Portfolio
+		#header-nav
+			a(href="/portfolio")
+				span Portfolio
+			a(href="/blog")
+				span Blog
+			a(href="/about")
+				span About		
+
+#body-inner-wrap.float-block
+	div.portfolio-list(ng-repeat="preview in previews")
+		a(ng-href="{{preview.link}}")
+			img.shadowed.portfolio-preview(ng-src="{{preview.display}}")
+		h1 {{preview.name}}
+		p.portfolio-description {{preview.description}}

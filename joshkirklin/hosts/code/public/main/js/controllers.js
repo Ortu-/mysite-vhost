@@ -1,153 +1,151 @@
+
+/* CONTROLLERS =========================================================*/
+
 var appControllers = angular.module('appControllers', []);
 
-appControllers.controller('homeCtrl', function($scope, $routeParams){
-	
+appControllers.controller('homeCtrl', function($scope, $routeParams, homeServiceGroup){
+	$scope.headerTitle = $routeParams.headerTitle || "";
 });
 
-appControllers.controller('loginCtrl', function($scope, userSession, $http, $routeParams){
-	
+appControllers.controller('blogSearchCtrl', function($scope, $routeParams, blogServiceGroup){
+	$scope.headerTitle = $routeParams.headerTitle || "";
 });
 
-appControllers.controller('searchCtrl', function($scope, $routeParams){
+appControllers.controller('blogCtrl', function($scope, $routeParams, $sce, requestService, blogServiceGroup){
+	$scope.headerTitle = $routeParams.headerTitle || "";
 	
-});
-
-appControllers.controller('blogCtrl', function($scope, userSession, $http, $sce, $timeout, $routeParams){
+	window.scrollTo(0,0);
+	$scope.isLoading = true;
 	
-	window.scrollTo(0, 0);
-	$scope.isLoading = true;	
+	//private data
+	var _blogService = blogServiceGroup.blog;
+	var _previewPage = 0;
 	
-	$scope.menu = {active: false};
+	//public data	
+	$scope.session = blogServiceGroup.session;
 	$scope.post = {};
 	$scope.form = {};
 	$scope.pushComment = {};
 	$scope.comments = [];
 	$scope.previews = [];
-	$scope.previewPage = 0;
 	$scope.readingList = [];
 	
-	//get post content
-	if(!$routeParams.reqPost){
+	// init -------------------------------------------------------------------------------
 	
-		//get next unread post
+	var init = function(){
+	
+		_setActiveUser();
 		
-		//TODO: html5 localstorage
-		//TEMP: redirect to first post
-		$http.get('/services/blog/post-content/introduction')
-			.success(function(data){
-				$scope.post.content = $sce.trustAsHtml(data.contentBody);
-				$scope.post.title = data.title;
-				$scope.post.date = data.date;
-				$scope.post.tags = data.tags;
-				
-				$scope.form.post_id = data.post_id;
-				
-				$scope.getPostPreviews($scope.previewPage);
-				$scope.getPostComments(data.post_id);
-				$scope.getActiveUser();
-				
-				$scope.isLoading = false;
-			});
-		//END TEMP
-	}
-	else{
-		//get requested post
-		$http.get('/services/blog/post-content/' + $routeParams.reqPost)
-			.success(function(data){
-				$scope.post.content = $sce.trustAsHtml(data.contentBody);
-				$scope.post.title = data.title;
-				$scope.post.date = data.date;
-				$scope.post.tags = data.tags;
-				
-				$scope.form.post_id = data.post_id;
-				
-				$scope.getPostPreviews($scope.previewPage);
-				$scope.getPostComments(data.post_id);
-				$scope.getActiveUser();
-				
-				$scope.isLoading = false;
-			});
-	}
-	
-	
-	
-	//get next post previews	
-	$scope.getPostPreviews = function(reqPage){
-		$http.get('/services/blog/preview-posts/'+ reqPage)
-			.success(function(data){
-				$scope.previews = data;
-			});
-	}
-	
-	
-	
-	//get post comments
-	$scope.getPostComments = function(reqPost){
-		$http.get('/services/blog/post-comments/' + reqPost)
-			.success(function(data){
-				$scope.comments = data;
-			});
-	}
-
-	
-	
-	//get user data
-	$scope.getActiveUser = function(){
-		
-		if(userSession.isLoggedIn){
-		
-			$scope.form.avatar = "avatar_" + $scope.form.user + ".jpg";
-			
+		//get post content
+		var reqPost = "";
+		if(!$routeParams.reqPost){
+			//TEMP: default to first post
+			//TODO: get last read from localstorage and then query next unread post
+			reqPost = "introduction";
 		}
 		else{
-		
-			//check localstorage for a previous guest, else create a new guest
-			if(false){
-			
-			}
-			else{
-				userSession.name = "Guest" + Math.floor((Math.random() * 10000) + 1);
-			}
-
-			$scope.form.avatar = "avatar_guest.jpg";
+			reqPost = $routeParams.reqPost;
 		}
 		
-		$scope.form.user = userSession.name;
-		
+		_getPostPreviews(_previewPage);
+		_getPost(reqPost);
+			
 	}
-
-
 	
-	//post new comment
+	// blog data ---------------------------------------------------------------------------
+	
+	var _getPost = function(reqPost){
+		$scope.isLoading = true;
+		requestService.get('/api/blog/get/post-content/'+ reqPost, true)
+			.then(function(resData){
+				$scope.post = resData;
+				$scope.post.content = $sce.trustAsHtml(resData.content);
+				$scope.form.post_id = resData.post_id;
+				$scope.isLoading = false;
+				_getPostComments(resData.post_id);
+			})
+			.catch(function(err){
+				$scope.post.content = "Oops! Could not get the post, sorry.";
+				$scope.isLoading = false;
+			});
+	}
+	
+	var _getPostComments = function(reqPostID){
+		requestService.get('/api/blog/get/post-comments/'+ reqPostID, false)
+			.then(function(resData){
+				$scope.comments = resData;
+			});
+	}	
+	
+	var _getPostPreviews = function(reqPage){
+		requestService.get('/api/blog/get/post-previews/'+ reqPage, true)
+			.then(function(resData){
+				$scope.previews = resData;
+			});		
+	}
+	
+	// blog actions ------------------------------------------------------------
+	
 	$scope.addComment = function(){
 		
-		if(!$scope.form.rbt || $scope.form.rbc){
+		if(!$scope.post.post_id){
+			alert("Sorry, you can't comment on an invalid post");
+		}
+		else if(!$scope.form.rbt || $scope.form.rbc){
 			alert("If you are a real human, check the appropriate box.\r\n\r\nDon't want to mess with this? Register or Sign In!");
 		}
 		else if(!$scope.form.content){
 			alert("Hey! Your comment is blank!");
 		}
 		else{
-			
-			var tDate = new Date();
-			$scope.form.date = tDate.getFullYear() + "-" + (tDate.getMonth() + 1) + "-" + tDate.getDate();
-			
-			$http.post('/services/blog/post-add-comment/', $scope.form)
-				.success(function(data){
-					angular.copy($scope.form, $scope.pushComment);
-					$scope.comments.push($scope.pushComment);
-					$scope.form.content = "";
+			requestService.post('/api/blog/post/add-comment/', $scope.form)
+				.then(function(resData){
+					if(resData.rtn){
+						$scope.form.date = resData.rtn
+						angular.copy($scope.form, $scope.pushComment);
+						$scope.comments.push($scope.pushComment);
+						$scope.form.content = "";
+					}
 				});
+		}
+	}	
+	
+	// user data -----------------------------------------------------------------
+	
+	var _setActiveUser = function(){
+		$scope.form.user = $scope.session.user.name;
+		if($scope.session.isLoggedIn){
+			$scope.form.avatar = "avatar_" + $scope.session.user.name + ".jpg";
+		}
+		else{
+			$scope.form.avatar = "avatar_guest.jpg";
 		}
 	}
 	
+	init();
 	
-	
-	//menu controls
-
-
 });
 
-appControllers.controller('downloadsCtrl', function($scope, $routeParams){
+appControllers.controller('portfolioCtrl', function($scope, userSession, $sce, $http, $routeParams){
+	$scope.headerTitle = $routeParams.headerTitle || "";
+	
+	$scope.previews = [];
+	
+	var onPort = ":8080";
+	
+	//get demo content
+	if(!$routeParams.reqDemo){
+		//display demo index list
+		$scope.previews.push({
+			name: "Dynamix",
+			link: "http://demo.joshkirklin.com" + onPort + "/dynamix",
+			display: "/portfolio/dynamix/preview-banner.jpg",
+			description: "An application for placing custom orders; designed to client specifications. It allows eCommerce shoppers to build and preview customized engagement rings by selecting from an assortment of settings and styles."
+		});
+	}
+	else{
+		//load specified demo into iframe ?
+		//for now, just load fully into demo host.
+	}
 	
 });

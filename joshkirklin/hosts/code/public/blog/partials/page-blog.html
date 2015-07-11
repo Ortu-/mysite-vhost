@@ -1,0 +1,97 @@
+
+<ng-include src="'main/partials/site-header.html'"></ng-include>
+
+<div id="body-inner-wrap" class="float-block">
+	
+	<div id="body-nav">
+		<div id="nav-btn-menu" class="nav-btn rounded" 
+			ng-click="menu.active=!menu.active">
+				<img src="/main/skin/default/images/icon-menu32.gif" />
+		</div>
+			
+		<div id="nav-panel-menu" class="shadowed2" 
+			ng-show="menu.active" 
+			ng-mouseover="menu.active=true;" 
+			ng-mouseleave="menu.active=false;">
+				<a href="/user/login"><div class="nav-menu-item">user:\> Login_</div></a>
+				<a href="/user/profile/{{form.user}}"><div class="nav-menu-item">user:\> Profile_</div></a>
+				<a href="/"><div class="nav-menu-item">loc:\> &nbsp;Home_</div></a>
+		</div>
+	</div>
+	
+	<div id="post-body">
+		<h1 class="post-title">{{post.title}}</h1>
+		<p class="post-header">
+			<span class="post-date">{{post.date}}</span>
+			
+			<span class="post-tags">
+				<span ng-repeat="tag in post.tags">
+					<a href="blog/search/{{tag}}" class="rounded">{{tag}}</a>&nbsp;
+				</span>
+			</span>
+		</p>
+		
+		<div id="loader"><img ng-src="/main/skin/default/images/loader-ring128.gif" ng-show="isLoading" /></div>
+		
+		<div id="post-content" ng-bind-html="post.content"></div>
+	</div>
+	
+	
+	<div id="recent-posts">
+		<div class="preview-block" ng-repeat="preview in previews">
+			<a ng-href="blog/{{preview.content}}">
+				<div class="recent-post shadowed">
+					<div class="preview-post-id">{{preview._id}}</div>
+					<div class="preview-title">{{preview.previewTitle}}</div>
+					<div class="preview-title-full">{{preview.title}}</div>
+					<div class="preview-content">{{preview.preview}}</div>
+				</div>
+			</a>
+			<div class="preview-tags">
+				<span ng-repeat="tag in preview.tags">
+					<a href="blog/search/{{tag}}" class="rounded">{{tag}}</a>&nbsp;
+				</span>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<div id="comments-wrap">
+
+	<div class="comments-list">
+		<div class="comment-block shadowed float-block" ng-repeat="comment in comments">
+			<div class="comment-left-col">
+				<div><img class="comment-avatar" ng-src="/blog/media/usr/{{comment.avatar}}" /></div>
+				<div class="comment-user">{{comment.user}}</div>
+				<div class="comment-date">{{comment.date}}</div>
+			</div>
+			<div class="comment-right-col">
+				<div class="comment-content">{{comment.content}}</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="add-comment-block">
+		<div>
+			<div id="add-comment-title">Add A Comment:</div>
+			<div><img class="comment-avatar" ng-src="/blog/media/usr/{{form.avatar}}" /></div>
+			<div class="comment-user" ng-model='form.user'>{{form.user}}</div>
+		</div>
+		
+		<textarea class="add-comment-content" ng-model='form.content'></textarea>
+		
+		<div>
+			<input type='checkbox' id='rbt' ng-model='form.rbt' />
+			<label for='rbt'>I am thought</label>
+			
+			<input type='checkbox' id='rbc' ng-model='form.rbc' />
+			<label for='rbc'>I am code</label>
+			
+			<div class="add-comment-submit" ng-click='addComment()'>Add Comment</div>
+		</div>
+	</div>
+	
+</div>
+
+<ng-include src="'main/partials/site-footer.html'"></ng-include>

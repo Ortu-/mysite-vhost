@@ -1,0 +1,17 @@
+doctype html
+html(lang="en" ng-app="mainApp")
+	head
+		meta(charset="utf-8")
+		base(href="/")
+		title(ng-bind="title")
+		<!--script(type='text/javascript' src='/vendor/modernizr-2.8.3.dev.js')-->
+		link(rel='stylesheet', href='/'+ tModule +'/skin/default/stylesheets/style.css')
+		link(rel='stylesheet', ng-href="{{styleSheet}}")
+	body
+		div(ng-view="")
+		script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js')
+		script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-route.min.js')
+		script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-resource.min.js')
+		script(type='text/javascript' src='/'+ tModule +'/js/app.js')
+		script(type='text/javascript' src='/'+ tModule +'/js/controllers.js')
+		script(type='text/javascript' src='/'+ tModule +'/js/services.js')
